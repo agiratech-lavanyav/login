@@ -1,0 +1,45 @@
+<mat-card-content class="content">
+  
+  
+  <div fxLayout="column wrap" fxLayoutAlign="center center" fxFlex="100%"    class="main">
+    <div class="profile">
+      <img class="user-image" src="../../assets/user-profile.webp" alt="">
+    </div>
+    <form class="my-form">
+      
+      <div class="header">
+        <h2>LOGIN</h2>
+      </div>
+      <div class="section1">
+
+            <mat-form-field class="full-width"appearance="outline">
+              <mat-label>Enter employee name</mat-label>
+              <input  matInput #u1   name="fname"  required>
+            </mat-form-field>
+      </div>
+
+      <div class="section2">
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your password</mat-label>
+          <input matInput #p2 [type]="hide ? 'password' : 'text'" required>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+    </form>
+    <button mat-raised-button color="primary" class="login-button" mat-button (click)="check(u1.value, p2.value)">Login</button>
+
+    <span class="msg">{{msg}}</span>
+
+  </div>
+
+</mat-card-content>
+
+
+
+
+
+
+
