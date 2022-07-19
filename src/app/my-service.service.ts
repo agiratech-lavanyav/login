@@ -1,30 +1,24 @@
-// import { Injectable } from '@angular/core';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class MyServiceService {
-
-//   constructor() { }
-// }
-
-
 import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MyServiceService {
-
   constructor() { }
-  checkusernameandpassword(uname: string , pwd: string)
-  {
-    if(uname == "admin" && pwd =="admin123"){
-      localStorage.setItem('username',"admin");
-      return true;
+
+  isAuthenticate = false;
+
+  login(username: string, password: string): boolean {
+    
+    if (localStorage.getItem(JSON.parse('username'))!=null) {
+      this.isAuthenticate = true;
+      return this.isAuthenticate;
     }
-    else{
-      return false;
-    }
-  }
+    this.isAuthenticate = false;
+    return this.isAuthenticate;
+
 }
+}
+
+
+

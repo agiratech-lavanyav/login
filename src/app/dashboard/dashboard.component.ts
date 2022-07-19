@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthguardGuard } from '../authguard.guard';
 
 
 
@@ -10,7 +11,13 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class DashboardComponent{
-  
+  routes: any;
+  // constructor(private Autheticate AuthguardGuard){}
+  // logout(){
+    // localStorage.removeItem("userName");
+    // localStorage.removeItem('userName');
+  //   this.routes.navigate(['']);
+  // }
 }
 
 
