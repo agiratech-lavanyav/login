@@ -1,3 +1,4 @@
+
 <mat-toolbar >
   <button (click)="drawer.toggle()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
       
@@ -22,7 +23,7 @@
           <mat-list-item role="listitem">	<mat-icon>work_off</mat-icon><span class="span">Leave</span></mat-list-item>
          
           <mat-list-item role="listitem" routerLink="/line-chart" ><mat-icon>calendar_today</mat-icon><span class="span">Attendance</span></mat-list-item>
-          <mat-list-item role="listitem" routerLink="/login" >	<mat-icon>delete</mat-icon><span class="span">Logout</span></mat-list-item>
+          <mat-list-item role="listitem">	<mat-icon>delete</mat-icon><span class="span" (click)="logout()">Logout</span></mat-list-item>
 
         </mat-list>   
   </mat-drawer>
@@ -35,7 +36,7 @@
               <div class="employee-status" fxFlex="50%" fxFlex.sm="50%" fxFlex.xs="100%">
                   <div class="performance">
                       <h3 style="font-size:30px;">Performance Rate</h3>
-                      <img class="light" style="width: 50px;" src="../../assets/lightening.png" alt="">
+                      <img class="light" style="width: 50px;" src="../../assets/images/lightening.png" alt="">
                       <span style="font-weight: bold; font-size: 30px;">76.89%</span>
                   </div>    
                   <div class="learning">
@@ -112,7 +113,7 @@
                           </div>
                           <div class="review">
                               <p>You have nothing to review!!!</p>
-                              <img src="../../assets/notice.png" alt="">
+                              <img src="../../assets/images/notice.png" alt="">
                           </div>
                           <div class="skills">
                             <h2>My Skills</h2>
@@ -124,7 +125,7 @@
                           <div class="acheivements">
                             <h2>Acheivements</h2>
                             <p>All your achievements will be displayed here!!</p>
-                            <img src="../../assets/win.png" alt="">
+                            <img src="../../assets/images/win.png" alt="">
                           </div>
                           <div class="upcoming-holidays">
                             <h2>Upcoming Holidays</h2>
@@ -136,7 +137,7 @@
 
                               </ul>
                           </div>
-                          <img class="girl" src="../../assets/girl.png" alt="">
+                          <img class="girl" src="../../assets/images/girl.png" alt="">
                           
                       </div> 
 
