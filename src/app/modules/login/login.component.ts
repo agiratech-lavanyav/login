@@ -16,10 +16,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if(localStorage.getItem("userName")!=null){
+      console.log("If comes");
       this.routes.navigate(['/dashboard'])
     }
     else{
-      this.routes.navigate(['/login'])
+      console.log("else comes");
+      this.routes.navigate([''])
     }
   }
   loginForm: FormGroup = this.fb.group({

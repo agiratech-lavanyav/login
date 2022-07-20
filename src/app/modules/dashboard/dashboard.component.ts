@@ -12,7 +12,7 @@ export class DashboardComponent{
   constructor(private routes: Router){}
   logout(){
     localStorage.clear();
-    this.routes.navigate(['/login']);
+    this.routes.navigate(['']);
   }
 }
 
