@@ -16,11 +16,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if(localStorage.getItem("userName")!=null){
-      console.log("If comes");
       this.routes.navigate(['/dashboard'])
     }
     else{
-      console.log("else comes");
       this.routes.navigate([''])
     }
   }

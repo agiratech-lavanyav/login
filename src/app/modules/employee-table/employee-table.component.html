@@ -1,0 +1,216 @@
+<div class="employee-details">
+  
+  <table class="employee-details__table" mat-table [dataSource]="empTabDataSource" matSort
+  #employeeTableSort="matSort">
+
+    <!-- first row -->
+      <!-- checkbox -->
+
+    <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          <mat-checkbox ></mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox></mat-checkbox>
+        </td>
+    </ng-container>
+        
+  
+      <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          No. 
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+      </ng-container>
+
+      <!-- Emp Id column -->
+      <ng-container matColumnDef="empID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 
+           Employee ID 
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.empID}} </td>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Name 
+        </th>
+        <td ><mat-form-field class="demo">
+          <input type="text" matInput placeholder="Search">
+        </mat-form-field></td>
+        <td  mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- Gender Column -->
+      <ng-container matColumnDef="gender">
+
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 
+          Gender 
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+      </ng-container>
+
+      <!-- Age Column -->
+      <ng-container matColumnDef="age">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Age
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.age}} </td>
+      </ng-container>
+  
+      <!-- Department Column -->
+      <ng-container matColumnDef="department">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Department 
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.department}} </td>
+      </ng-container>
+
+      <!-- Year of joining Column -->
+      <ng-container matColumnDef="yr_of_joining">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 
+         Year Of Joining
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.yr_of_joining}} </td>
+      </ng-container>
+
+       <!-- Email Column -->
+       <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Email
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      </ng-container>
+
+      <!-- Contact Number Column -->
+      <ng-container matColumnDef="contact">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Contact
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.contact}} </td>
+      </ng-container>
+
+
+
+
+
+
+
+      <!-- second row -->
+
+      <ng-container matColumnDef="position-row2">
+        <th mat-header-cell *matHeaderCellDef>
+          
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="empID-row2">
+        <th mat-header-cell *matHeaderCellDef>    
+            <div>
+              <mat-form-field>
+                <input matInput  [(ngModel)]="globalFilter" (ngModelChange)="applyFilter($event)" class="form-field" [formControl]="idFilter" placeholder="ID Filter">
+              </mat-form-field>
+            </div>    
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="name-row2">
+        <th mat-header-cell *matHeaderCellDef>          
+          <div>
+            <mat-form-field>
+              <input matInput  class="form-field" [formControl]="nameFilter" placeholder="Name Filter">
+            </mat-form-field>
+          </div> 
+        </th>
+        <td ><mat-form-field class="demo">
+          <input type="text" matInput placeholder="Search">
+        </mat-form-field></td>
+      </ng-container>
+
+      <ng-container matColumnDef="gender-row2">
+        <th mat-header-cell *matHeaderCellDef> 
+
+          <!-- <form class="example-form">
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Number</mat-label>
+              <input type="text"
+                     placeholder="Pick one"
+                     aria-label="Number"
+                     matInput
+                     [formControl]="myControl"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of options" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </form> -->
+
+            <div>
+              <mat-form-field>
+                <mat-label>Select</mat-label>
+                <mat-select>
+                  <mat-option value="one">Male</mat-option>
+                  <mat-option value="two">Female</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="age-row2">
+        <th mat-header-cell *matHeaderCellDef>
+          
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="department-row2">
+        <th mat-header-cell *matHeaderCellDef>
+            <div>
+              <mat-form-field >
+                <mat-label>Select</mat-label>
+                <mat-select>
+                  <mat-option value="one">Analyst</mat-option>
+                  <mat-option value="two">Developer</mat-option>
+                  <mat-option value="three">Development</mat-option>
+                  <mat-option value="four">Engineer</mat-option>
+                  <mat-option value="five">Manager</mat-option>
+                  <mat-option value="six">Management</mat-option>
+                  <mat-option value="seven">Tester</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>  
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="yr_of_joining-row2">
+        <th mat-header-cell *matHeaderCellDef> 
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="email-row2">
+        <th mat-header-cell *matHeaderCellDef>
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="contact-row2">
+        <th mat-header-cell *matHeaderCellDef>
+        </th>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-header-row *matHeaderRowDef="['select','position-row2', 'empID-row2','name-row2','gender-row2','age-row2','department-row2','yr_of_joining-row2','email-row2','contact-row2']"></tr>
+
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  
+    <mat-paginator class="employee-details__table-paginator" #paginator
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 20]">
+    </mat-paginator>
+</div>
+  
