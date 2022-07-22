@@ -2,9 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormControl } from '@angular/forms';
-import {MatSort,Sort} from '@angular/material/sort';
-import * as _ from 'lodash';
-import { values } from 'lodash';
+import { MatSort,Sort } from '@angular/material/sort';
+import { SelectionModel } from '@angular/cdk/collections';
+import { Observable } from 'rxjs';
+import { startWith } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -15,22 +17,50 @@ import { values } from 'lodash';
 export class EmployeeTableComponent {
   displayedColumns = ['select','position', 'empID','name','gender','age','department','yr_of_joining','email','contact'];
   empTabDataSource = new MatTableDataSource<employeeDetails>(ELEMENT_DATA);
-  // response:any = [];
+  selection = new SelectionModel<employeeDetails>(true, []);
 
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.empTabDataSource.data.length;
+    return numSelected === numRows;
+  }
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.empTabDataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  // Autocomplete for gender section
+
+  empGender = new FormControl();
+  empDepartment = new FormControl();
+
+  options = [
+    'Male',
+    'Female',
+  ];
+  values = [
+    'Analyst',
+    'Developer',
+    'Development',
+    'Engineer',
+    'Manager',
+    'Management',
+    'Tester',
+  ];
+
+  filteredOptions: Observable<string[]> | undefined;
+  filterOptions: Observable<string[]> | undefined;
 
   // filter for employee table
 
   idFilter=  new FormControl();
   nameFilter= new FormControl();
-  // genderFilter=new FormControl();
-  globalFilter='';
 
   filteredValues = {
     position: '', empID:'', name: '',gender:'', age:'', department:'', yr_of_joining:'', email:'', contact:''};
 
     ngOnInit() {
-
-      // this.response = Element;
 
       this.idFilter.valueChanges.subscribe((idFilterValue) => {
         this.filteredValues['empID'] = idFilterValue;
@@ -42,33 +72,54 @@ export class EmployeeTableComponent {
         this.empTabDataSource.filter = JSON.stringify(this.filteredValues);
       });
 
-      // this.genderFilter.valueChanges.subscribe((genderFilterValue)=>{
-      //   this.filteredValues['gender']= genderFilterValue;
-      //   this.empTabDataSource.filter = JSON.stringify(this.filteredValues);
-      // });
-  
+      this.empGender.valueChanges.subscribe((empGenderValue)=>{
+        this.filteredValues['gender'] = empGenderValue;
+        this.empTabDataSource.filter = JSON.stringify(this.filteredValues);
+      });
+      
+      this.empDepartment.valueChanges.subscribe((empDepartmentValue)=>{
+        this.filteredValues['department'] = empDepartmentValue;
+        this.empTabDataSource.filter = JSON.stringify(this.filteredValues);
+      });
+
       this.empTabDataSource.filterPredicate = this.customFilterPredicate();
-  
+
+      this.filteredOptions = this.empGender.valueChanges      //for gender (autocomplete)
+      .pipe(
+        startWith(''),
+        map((val: string) => this.filterGender(val))
+      );
+      this.filterOptions = this.empDepartment.valueChanges      //for department (autocomplete)
+      .pipe(
+        startWith(''),
+        map((val: string) => this.filterDepartment(val))
+      );
+
     }
+
+    filterGender(val: string): string[] {                                 //for gender (autocomplete)
+      return this.options.filter(option =>
+      option.toLowerCase().indexOf(val.toLowerCase()) === 0);
+    }
+
+    filterDepartment(val: string): string[] {                             //for department (autocomplete)
+      return this.values.filter(value =>
+      value.toLowerCase().indexOf(val.toLowerCase()) === 0);
+    }
+
   
-    applyFilter(filter: any) {
-      this.globalFilter = filter;
+    applyFilter(filter: any) {                                             //filter for name and id
       this.empTabDataSource.filter = JSON.stringify(this.filteredValues);
     }
 
     customFilterPredicate() {
       const myFilterPredicate = (data: employeeDetails, filter: string): boolean => {
-        var globalMatch = !this.globalFilter;
-  
-        if (this.globalFilter) {
-
-          globalMatch = data.name.toString().trim().toLowerCase().indexOf(this.globalFilter.toLowerCase()) !== -1;
-                        // data.gender.toString().trim().toLowerCase().indexOf(this.globalFilter.toLowerCase()) !== -1;
-        }
-        let searchString = JSON.parse(filter);
+       
+      let searchString = JSON.parse(filter);
         return data.empID.toString().trim().indexOf(searchString.empID) !== -1 &&
-          data.name.toString().trim().toLowerCase().indexOf(searchString.name.toLowerCase()) !== -1;
-          // data.gender.toString().trim().toLowerCase().indexOf(searchString.gender.toLowerCase()) !== -1;
+          data.name.toString().trim().toLowerCase().indexOf(searchString.name.toLowerCase()) !== -1 &&
+          data.gender.toString().trim().toLowerCase().indexOf(searchString.gender.toLowerCase()) !== -1 &&
+          data.department.toString().trim().toLowerCase().indexOf(searchString.department.toLowerCase()) !== -1;
       }
       return myFilterPredicate;
      }
@@ -84,25 +135,20 @@ export class EmployeeTableComponent {
 
 
 ngAfterViewInit() {
+
   this.empTabDataSource.paginator = this.paginator;
 
   this.employeeTableSort.disableClear = true;
   this.empTabDataSource.sort = this.employeeTableSort;
 
 }
-// onChange($event: any){
-//   let filteredData = _.filter(this.response,(item)=>{
-//     return item.gender.toLowerCase() == $event.value.toLowerCase();
-//   })
-//   this.empTabDataSource = new MatTableDataSource(filteredData);
-// }
-
 }
 
   // constructor() { }
 
   // ngOnInit(): void {
   // }
+
 export interface employeeDetails {
     position: number;
     empID: number;
@@ -126,7 +172,6 @@ export interface employeeDetails {
     {position: 7,  empID: 107, name:"Shelley",  gender:"Female",  age:32, department:"Management",  yr_of_joining:2016, email:"hsenger@hotmail.com",           contact:8079785519,},
     {position: 8,  empID: 108, name:"William",  gender:"Male",    age:31, department:"Developer",   yr_of_joining:2011, email:"corrine.pfeffer@hotmail.com",   contact:7448949198,},
     {position: 9,  empID: 109, name:"Steven",   gender:"Male",    age:35, department:"Engineer",    yr_of_joining:2013, email:"lang.keegan@haley.biz",         contact:6127947177,},
-    {position: 9,  empID: 109, name:"Steven",   gender:"Male",    age:35, department:"Engineer",    yr_of_joining:2013, email:"ledner.chester@gibson.biz",     contact:8840921465,},
     {position: 10, empID: 110, name:"Neena",    gender:"Female",  age:28, department:"Tester",      yr_of_joining:2019, email:"kallie.murray@mcglynn.com",     contact:6797189012,},
     {position: 11, empID: 111, name:"Alexander",gender:"Male",    age:27, department:"Developer",   yr_of_joining:2020, email:"norbert21@gmail.com",           contact:8079633321,},
     {position: 12, empID: 112, name:"Bruce",    gender:"Male",    age:38, department:"Analyst",     yr_of_joining:2012, email:"reynolds.elsie@gmail.com",      contact:6127997940,},

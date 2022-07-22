@@ -4,15 +4,12 @@
       .employee-details__table {
         overflow: auto;
         width: 100%;
-        .demo{
-          background-color: brown;
-        }
         th,td{
           padding: 10px 20px;
-          background-color: rgb(212, 201, 201);
+          background-color:	#FAF9F6;
           color: rgba(0, 0, 0, 0.952);
         }
-        th{
+        .employee-details__table--firstTableHeader th{
           background: #358e9c;  
           color: #fff;
           font-size: 1.2em;
@@ -20,6 +17,11 @@
         .employe-details__table--checkbox{
           color: black;
         }
+        .employee-details__table--secondTableHeader th{
+          background-color:			#51a8b6;
+          font-size: 1.2em;
+        }
+
       }
       .employee-details__table-paginator{
         background: #2C3E50;  

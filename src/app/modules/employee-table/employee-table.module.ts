@@ -7,6 +7,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import {MatSortModule} from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule} from '@angular/material/autocomplete';
+
 
 
 
@@ -23,7 +25,10 @@ import { MatSelectModule } from '@angular/material/select';
     ReactiveFormsModule,
     FormsModule,
     MatSortModule,
-    MatSelectModule
+    MatSelectModule,
+    MatAutocompleteModule,
+   
+
     
   ]
 })

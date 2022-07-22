@@ -4,6 +4,7 @@ import { LoginComponent } from './modules/login/login.component';
 import { LineChartComponent } from './modules/line-chart/line-chart.component';
 import { AuthguardGuard } from './providers/authguard.guard';
 
+
 const routes: Routes = [
   // { path: '', component: LoginComponent},
   { path: 'line-chart', component: LineChartComponent },
