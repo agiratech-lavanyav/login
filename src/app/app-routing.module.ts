@@ -1,21 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { Chart } from 'chart.js';
-import { LineChartComponent } from './line-chart/line-chart.component';
-import { NgChartsModule } from 'ng2-charts';
-
-
-
-
+import { LoginComponent } from './modules/login/login.component';
+import { LineChartComponent } from './modules/line-chart/line-chart.component';
+import { AuthguardGuard } from './providers/authguard.guard';
 
 
 const routes: Routes = [
-  {path: '', component:LoginComponent,},
-  {path:'line-chart', component:LineChartComponent},
-  { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
-  { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) }
+  // { path: '', component: LoginComponent},
+  { path: 'line-chart', component: LineChartComponent },
+  { path: '', loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule) },
+  { path: 'dashboard', loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule),canActivate: [AuthguardGuard]},
+  { path: 'employee-table', loadChildren: () => import('./modules/employee-table/employee-table.module').then(m => m.EmployeeTableModule) }
 ];
 
 @NgModule({
